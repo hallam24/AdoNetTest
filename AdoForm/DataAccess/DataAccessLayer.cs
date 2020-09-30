@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using AdoForm.Security;
+using System;
 
 namespace AdoForm.DataAccess
 {
@@ -56,26 +57,10 @@ namespace AdoForm.DataAccess
             string result = "";
             SecurityHandler secHandler = new SecurityHandler();
             string userPassword = secHandler.HashPassword(userObj.Password);
-            try
+            bool taken = EmailIsTaken(userObj.Email);
+            if (!taken)
             {
-                using (SqlConnection con = new SqlConnection(_connectionString))
-                {
-                    // Insert query  
-                    string query = "SELECT * FROM Users " +
-                                   "WHERE email = @email";
-                    using (SqlCommand cmd = new SqlCommand(query))
-                    {
-                        cmd.Connection = con;
-                        // opening connection  
-                        con.Open();
-                        // Passing parameter values  
-                        cmd.Parameters.AddWithValue("@email", userObj.Email);
-
-                        // Executing insert query  
-                        result = cmd.ExecuteNonQuery() >= 1 ? "exists" : "email exists";
-                    }
-                }
-                if (result != "email exists")
+                try
                 {
                     using (SqlConnection con = new SqlConnection(_connectionString))
                     {
@@ -94,20 +79,52 @@ namespace AdoForm.DataAccess
                             result = cmd.ExecuteNonQuery() >= 1 ? "success" : "failure";
                         }
                     }
+
                 }
-                else
+                catch
                 {
-                    return result;
+                    return result = "";
                 }
             }
-            catch
+            else
             {
-                return result = "";
+                result = "email address is taken";
             }
             return result;
 
         }
 
+        public bool EmailIsTaken(string email)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    // Insert query  
+                    string query = "SELECT * FROM users " +
+                                   "WHERE email = @email";
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        cmd.Connection = con;
+                        // opening connection  
+                        con.Open();
+                        // Passing parameter values  
+                        cmd.Parameters.AddWithValue("@email", email);
+
+                        // Executing insert query  
+                        int rows = (int)cmd.ExecuteScalar();
+                        if (rows < 1) return false; 
+                    }
+                }
+                return true;
+
+            }
+            catch
+            {
+                // An error should be thrown but this will do for now
+                return true;
+            }
+        }
         // Other crud methods would go here
     }
 }
