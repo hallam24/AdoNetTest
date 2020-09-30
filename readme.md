@@ -1,0 +1,1 @@
+# Ado.net mock user registration
