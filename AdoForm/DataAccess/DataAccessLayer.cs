@@ -112,8 +112,12 @@ namespace AdoForm.DataAccess
                         cmd.Parameters.AddWithValue("@email", email);
 
                         // Executing insert query  
-                        int rows = (int)cmd.ExecuteScalar();
-                        if (rows < 1) return false; 
+                        object result = (string)cmd.ExecuteScalar();
+                        // Handle null being returned. This is not the best way to do it
+                        if(result != null || (string)result != "null")
+                        {
+                             return false;
+                        }
                     }
                 }
                 return true;
