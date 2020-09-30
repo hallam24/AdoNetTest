@@ -10,6 +10,8 @@ Run Program.cs to create the table "Homework" and the table "Users" on the serve
 ## AdoForm
 Contains an MVC project that mimics a user registration page.
 
+Web.config contains the connection details for the server you wish to use.
+
 HomeController is the only controller. 
 
 SecurityHandler handles hashing and comparing passwords.
