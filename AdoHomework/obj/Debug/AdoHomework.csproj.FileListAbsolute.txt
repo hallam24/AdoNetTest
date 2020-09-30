@@ -1,0 +1,7 @@
+C:\Users\Glom\source\repos\AdoHomework\AdoHomework\bin\Debug\AdoHomework.exe.config
+C:\Users\Glom\source\repos\AdoHomework\AdoHomework\bin\Debug\AdoHomework.exe
+C:\Users\Glom\source\repos\AdoHomework\AdoHomework\bin\Debug\AdoHomework.pdb
+C:\Users\Glom\source\repos\AdoHomework\AdoHomework\obj\Debug\AdoHomework.csprojAssemblyReference.cache
+C:\Users\Glom\source\repos\AdoHomework\AdoHomework\obj\Debug\AdoHomework.csproj.CoreCompileInputs.cache
+C:\Users\Glom\source\repos\AdoHomework\AdoHomework\obj\Debug\AdoHomework.exe
+C:\Users\Glom\source\repos\AdoHomework\AdoHomework\obj\Debug\AdoHomework.pdb

@@ -1,0 +1,53 @@
+﻿@model List<AdoForm.Models.User>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "CreateUser")
+    </p>
+    <table class="table">
+        @if (Model != null && Model.Count > 0)
+        {
+            <tr>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Password
+                </th>
+            </tr>
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <h2>No users here yet</h2>
+            </tr>
+            <p>
+                @Html.ActionLink("Refresh", "GetUsers")
+            </p>
+        }
+
+    </table>
+</body>
+</html>
