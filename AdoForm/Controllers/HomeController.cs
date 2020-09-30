@@ -9,7 +9,7 @@ using AdoForm.Models;
 
 namespace AdoForm.Controllers
 {
-    //[Route("Home/{action}")]
+    // Could have been called UserController
     public class HomeController : Controller
     {
 

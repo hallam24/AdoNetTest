@@ -61,7 +61,8 @@ namespace AdoForm.DataAccess
                 using (SqlConnection con = new SqlConnection(_connectionString))
                 {
                     // Insert query  
-                    string query = "INSERT INTO users(email,password) VALUES(@email, @password)";
+                    string query = "SELECT * FROM Users " +
+                                   "WHERE email = @email";
                     using (SqlCommand cmd = new SqlCommand(query))
                     {
                         cmd.Connection = con;
@@ -69,11 +70,34 @@ namespace AdoForm.DataAccess
                         con.Open();
                         // Passing parameter values  
                         cmd.Parameters.AddWithValue("@email", userObj.Email);
-                        cmd.Parameters.AddWithValue("@password", userPassword);
 
                         // Executing insert query  
-                        result = cmd.ExecuteNonQuery() >= 1 ? "success" : "failure";
+                        result = cmd.ExecuteNonQuery() >= 1 ? "exists" : "email exists";
                     }
+                }
+                if (result != "email exists")
+                {
+                    using (SqlConnection con = new SqlConnection(_connectionString))
+                    {
+                        // Insert query  
+                        string query = "INSERT INTO users(email,password) VALUES(@email, @password)";
+                        using (SqlCommand cmd = new SqlCommand(query))
+                        {
+                            cmd.Connection = con;
+                            // opening connection  
+                            con.Open();
+                            // Passing parameter values  
+                            cmd.Parameters.AddWithValue("@email", userObj.Email);
+                            cmd.Parameters.AddWithValue("@password", userPassword);
+
+                            // Executing insert query  
+                            result = cmd.ExecuteNonQuery() >= 1 ? "success" : "failure";
+                        }
+                    }
+                }
+                else
+                {
+                    return result;
                 }
             }
             catch
